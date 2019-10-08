@@ -1,11 +1,26 @@
 import React from 'react'
-import withAppContext from './with-context-hoc'
+import { connect } from 'react-redux'
 
 class Screen extends React.Component {
-  render() {
+  render () {
+    const { caculatorReducer } = this.props
     return (
-      <div className="screen code" id="screen">{this.props.context.outputValue}</div>
+      <div className="screen code" id="screen">{caculatorReducer.outputValue}</div>
     )
   }
 }
-export default withAppContext(Screen)
+
+const mapStateToProps = (state) => {
+  return {
+    caculatorReducer: state.caculatorReducer
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  // action: (params) => dispatch(action(params))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Screen)

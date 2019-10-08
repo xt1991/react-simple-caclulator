@@ -1,28 +1,15 @@
 const initialCaculater = {
-  result: 0
+  keepedValue: null,
+  outputValue: '0',
+  method: null,
+  isNextValue: false
 }
 const caculatorReducer = (state = initialCaculater, action) => {
   switch (action.type) {
-    case 'ADD':
+    case 'FETCH_DATA':
       return {
         ...state,
-        result: action.result
-      }
-    case 'SUBTRACT':
-      return {
-        ...state,
-        result: action.result
-      }
-    case 'MULTIPLY':
-      return {
-        ...state,
-        result: action.result
-      }
-
-    case 'DIVIDE':
-      return {
-        ...state,
-        result: action.result
+        ...action.data
       }
 
     default:

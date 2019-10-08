@@ -1,75 +1,118 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import Button from './button'
 
-import withAppContext from './with-context-hoc'
+//actions
+import { 
+  clearValue,
+  inputCharacter,
+  removeCharacter,
+  toggleNegative,
+  takeMethod,
+  getResult,
+} from '_actions/'
+
 import { buttonList, ButtonType, ButtonMethod } from '_utils/constants'
 
 class NumPad extends React.Component {
-
-  componentDidMount(){
-    document.addEventListener("keyup", this.keyPressHandle.bind(this), false)
+  componentDidMount () {
+    document.addEventListener('keyup', this.keyPressHandle.bind(this), false)
   }
 
-  componentWillUnmount(){
-    document.removeEventListener("keyup", this.keyPressHandle, false)
+  componentWillUnmount () {
+    document.removeEventListener('keyup', this.keyPressHandle, false)
   }
 
-  keyPressHandle(e) {
-    const { actions } = this.props
+  keyPressHandle (e) {
     const keyCode = e.keyCode
 
+    const {
+      inputCharacter,
+      removeCharacter,
+      clearValue,
+      takeMethod,
+      getResult,
+    } = this.props
+
     if (((keyCode >= 48 && keyCode <= 57) || keyCode === 110 || keyCode === 190) && !e.shiftKey) {
-      actions.inputCharacter(e.key)
+      inputCharacter(e.key)
     } else if (keyCode === 8) {
-      actions.removeCharacter()
+      removeCharacter()
     } else if (keyCode === 46) {
-      actions.clearValue()
+      clearValue()
     } else if (keyCode === 107 || (keyCode === 187 && e.shiftKey)) {
-      actions.takeMethod(ButtonMethod.ADD)
+      takeMethod(ButtonMethod.ADD)
     } else if (keyCode === 109 || (keyCode === 189 && !e.shiftKey)) {
-      actions.takeMethod(ButtonMethod.SUBTRACT)
+      takeMethod(ButtonMethod.SUBTRACT)
     } else if (keyCode === 106 || (keyCode === 56 && e.shiftKey)) {
-      actions.takeMethod(ButtonMethod.MUTIPLY)
+      takeMethod(ButtonMethod.MUTIPLY)
     } else if (keyCode === 111 || (keyCode === 191 && !e.shiftKey)) {
-      actions.takeMethod(ButtonMethod.DIVIDE)
+      takeMethod(ButtonMethod.DIVIDE)
     } else if (keyCode === 13) {
-      actions.getResult()
+      getResult()
     }
   }
 
-  buttonClickHandle(e) {
-    const { actions } = this.props
+  buttonClickHandle = (e) => {
+
+    const {
+      inputCharacter,
+      removeCharacter,
+      clearValue,
+      toggleNegative,
+      takeMethod,
+      getResult,
+    } = this.props
     switch (e.type) {
       case ButtonType.NUMBER:
-        actions.inputCharacter(e.label)
+        inputCharacter(e.label)
         break
       case ButtonType.REMOVE:
-        actions.removeCharacter()
+        removeCharacter()
         break
       case ButtonType.CLEAR:
-        actions.clearValue()
+        clearValue()
         break
       case ButtonType.TOGGLE_NEGATIVE:
-        actions.toggleNegative()
+        toggleNegative()
         break
       case ButtonType.METHOD:
-        actions.takeMethod(e.method)
+        takeMethod(e.method)
         break
       case ButtonType.RESULT:
-        actions.getResult()
+        getResult()
         break
       default:
-        return
+        
     }
   }
 
-  render() {
+  render () {
     return <div className="pad-wrapper">
       { buttonList.map((btn, index) => {
-        return <Button buttonData={btn} key={index} clickHandle={this.buttonClickHandle.bind(this)} />
+        return <Button buttonData={btn} key={index} clickHandle={this.buttonClickHandle} />
       })}
     </div>
   }
 }
 
-export default withAppContext(NumPad)
+// export default withAppContext(NumPad)
+const mapStateToProps = (state) => {
+  return {
+    caculatorReducer: state.caculatorReducer
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  inputCharacter: (params) => dispatch(inputCharacter(params)),
+  takeMethod: (params) => dispatch(takeMethod(params)),
+  removeCharacter: () => dispatch(removeCharacter()),
+  clearValue: () => dispatch(clearValue()),
+  toggleNegative: () => dispatch(toggleNegative()),
+  getResult: () => dispatch(getResult())
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(NumPad)

@@ -29,3 +29,7 @@
 - run serve -s build -l portNumber
 - run pm2 start ecosystem.config.js
 - config ngix (or apache) with portNumber
+
+### How to analyze project
+- run 'npm run build'
+- run 'npm run analyze'

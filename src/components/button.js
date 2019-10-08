@@ -1,14 +1,31 @@
 import React from 'react'
-import withAppContext from './with-context-hoc'
+import { connect } from 'react-redux'
 
 class Button extends React.Component {
-  render() {
-    const { buttonData, context } = this.props
-    let activeClass = context.method === buttonData.method ? 'active' : ''
-    return <div className={`button ${buttonData.type}-btn ${activeClass}`} onClick={() => this.props.clickHandle(buttonData)}>
+  render () {
+    const {
+      buttonData,
+      caculatorReducer,
+      clickHandle
+    } = this.props
+    const activeClass = caculatorReducer.method === buttonData.method ? 'active' : ''
+    return <div className={`button ${buttonData.type}-btn ${activeClass}`} onClick={() => clickHandle(buttonData)}>
       {buttonData.label}
-    </div>  
+    </div>
   }
 }
 
-export default withAppContext(Button)
+const mapStateToProps = (state) => {
+  return {
+    caculatorReducer: state.caculatorReducer
+  }
+}
+
+const mapDispatchToProps = dispatch => ({
+  // action: (params) => dispatch(action(params))
+})
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Button)

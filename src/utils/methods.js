@@ -1,8 +1,8 @@
 import { ButtonMethod, maximumCharacters, TextOutput } from './constants'
 
 export default {
-  appendNumber(current, char) {
-    let minusSign = current[0] === '-' ? current[0] : ''
+  appendNumber (current, char) {
+    const minusSign = current[0] === '-' ? current[0] : ''
     let newString = ''
     current = minusSign ? current.substr(1) : current
 
@@ -17,17 +17,17 @@ export default {
     return minusSign + newString
   },
 
-  removeNumber(current) {
-    let numberOnly = current.replace(/.-/g, '')
+  removeNumber (current) {
+    const numberOnly = current.replace(/.-/g, '')
     return numberOnly.length === 1 ? '0' : current.slice(0, -1)
   },
 
-  toggleNegative(current) {
+  toggleNegative (current) {
     return current.indexOf('-') === -1 ? '-' + current : current.replace('-', '')
   },
 
-  calculate(param1, param2, method) {
-    function calculateByMethod(method, x, y) {
+  calculate (param1, param2, method) {
+    function calculateByMethod (method, x, y) {
       switch (method) {
         case ButtonMethod.ADD: return x + y
         case ButtonMethod.SUBTRACT: return x - y
@@ -41,7 +41,7 @@ export default {
     return this.formatNumber(calculateByMethod(method, param1, param2))
   },
 
-  formatNumber(number) {
+  formatNumber (number) {
     if (number === Infinity) {
       return TextOutput.INFINITY
     }
@@ -53,7 +53,7 @@ export default {
     }
 
     if (number.toString().indexOf('.') !== -1) {
-      let pointIndex = number.toString().indexOf('.')
+      const pointIndex = number.toString().indexOf('.')
       if (pointIndex < maximumCharacters - 1) {
         return number.toFixed(maximumCharacters - pointIndex - 1)
       }
@@ -63,7 +63,7 @@ export default {
     if (number.toString().length > maximumCharacters) {
       number = number.toExponential()
       if (number.toString().length > maximumCharacters) {
-        let splitedString = number.toString().split('e')
+        const splitedString = number.toString().split('e')
         splitedString[0] = splitedString[0].substr(0, maximumCharacters - splitedString[1].length - 1)
         return splitedString.join('e')
       }
