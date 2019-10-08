@@ -12,10 +12,10 @@
 - git clone project
 - run npm i
 
-###Develop
+### Develop
 - run npm start
 
-###Production
+### Production
 - run npm build
 - serve -s build -l portNumber **
 - pm2 start ecosystem.config.js **
