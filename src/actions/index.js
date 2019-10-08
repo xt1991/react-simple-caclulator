@@ -1,7 +1,6 @@
 /**
  */
 import utilMethods from '_utils/methods'
-import { buttonList } from '_utils/constants'
 
 export const caculatorReducer = (data) => {
   return {
