@@ -10,14 +10,14 @@
     "react-redux": "^7.1.0",
     "react-router": "5.0.0",
     "react-router-dom": "5.0.0",
-    "react-scripts": "3.0.0",
+    "react-scripts": "5.0.1",
     "redux": "^4.0.4",
     "redux-thunk": "^2.3.0",
     "source-map-explorer": "^2.0.1"
   },
   "devDependencies": {
     "@types/react": "16.8.13",
-    "eslint": "^5.16.0",
+    "eslint": "^9.32.0",
     "eslint-config-standard": "^13.0.0",
     "eslint-plugin-import": "^2.18.0",
     "eslint-plugin-node": "^9.1.0",
